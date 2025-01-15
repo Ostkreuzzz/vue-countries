@@ -2,10 +2,12 @@ import type { Config } from 'tailwindcss'
 
 export default {
   content: [
+    './src/**/*.vue',
     './pages//*.{js,ts,jsx,tsx,mdx}',
     './components//*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+
   theme: {
     screens: {
       mobile: '320px',
@@ -16,21 +18,20 @@ export default {
 
     colors: {
       white: '#FFFFFF',
-      'white-secondary': '#D1D2DA',
-      'white-soft': '#C8CBE7',
-      'dark-blue': '#25273D',
-      'light-gray': '#5B5E7E',
-      'light-gray-secondary': '#9495A5',
-      'light-gray-outline': '#494C6B',
-      blue: '#3A7CFD',
-      grey: '#817D92',
+      black: '#1B1D1F',
+      'black-soft': '#282B30',
+      'light-gray': '#D2D5DA',
+      blue: '#4E80EE',
+      grey: '#6C727F',
     },
 
     fontFamily: {
-      primary: ['Outfit', 'sans-serif'],
+      primary: ['Rubik', 'sans-serif'],
     },
 
     spacing: {
+      0: '0px',
+
       4: '4px',
       8: '8px',
       10: '10px',
@@ -57,6 +58,13 @@ export default {
     extend: {
       borderRadius: {
         xl: '20px',
+      },
+      backgroundSize: {
+        'full-width': '100% auto',
+      },
+      backgroundImage: {
+        desktop: "url('/src/assets/img/hero-image.jpg')",
+        mobile: "url('/src/assets/img/hero-image-sm.jpg')",
       },
     },
   },

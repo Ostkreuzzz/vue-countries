@@ -8,15 +8,10 @@
 
 body {
   min-height: 100vh;
-  color: #C8CBE7;
-  background: #25273D;
-  transition:
-    color 0.5s,
-    background-color 0.5s;
+  color: #d2d5da;
+  background: #030104;
   line-height: 1.6;
-  font-family:
-    "Outfit", sans-serif;
-    sans-serif;
+  font-family: 'Rubik', sans-serif;
   font-size: 16px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
