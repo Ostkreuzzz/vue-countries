@@ -1,14 +1,25 @@
 export interface Country {
-  flag: string
+  flags: FlagType
   name: CountryName
   population: string
   area: string
   region: string
   unMember: boolean
   independent: boolean
+  continents: string[]
+  capital: string[]
+  currencies: string[]
+  languages: string[]
+  borders: string[]
+  subregion: string
 }
 
-export interface CountryName {
+interface CountryName {
   common: string
-  oficial: string
+  official: string
+}
+
+interface FlagType {
+  png: string
+  svg: string
 }

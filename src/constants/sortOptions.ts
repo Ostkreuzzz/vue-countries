@@ -4,10 +4,10 @@ export const sortTypes = [
   { name: 'Alphabeticly', code: 'ABC' },
 ]
 export const locations = [
-  { name: 'America', checked: true },
-  { name: 'Antarctic', checked: true },
-  { name: 'Africa', checked: true },
-  { name: 'Asia', checked: true },
-  { name: 'Europe', checked: true },
-  { name: 'Oceania', checked: true },
+  { name: 'America', checked: false },
+  { name: 'Antarctic', checked: false },
+  { name: 'Africa', checked: false },
+  { name: 'Asia', checked: false },
+  { name: 'Europe', checked: false },
+  { name: 'Oceania', checked: false },
 ]

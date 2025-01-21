@@ -23,8 +23,8 @@ const sortType = ref(sortTypes[0])
 const sortLocations = reactive(locations)
 
 const countryType = reactive({
-  unMembership: true,
-  independance: true,
+  unMembership: false,
+  independance: false,
 })
 
 function handleSearchSubmit() {
