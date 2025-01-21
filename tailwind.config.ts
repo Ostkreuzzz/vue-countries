@@ -60,7 +60,7 @@ export default {
         xl: '20px',
       },
       backgroundSize: {
-        'full-width': '100% auto',
+        'full-width': '100%',
       },
       backgroundImage: {
         desktop: "url('/src/assets/img/hero-image.jpg')",

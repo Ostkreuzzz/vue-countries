@@ -1,42 +1,28 @@
 <script setup lang="ts">
+import { onMounted, reactive, ref } from 'vue'
+
+import type { Country } from './interface/Country'
+import { type Severity } from '@/types/Severity'
+
 import { useToast } from 'primevue/usetoast'
 import Toast from 'primevue/toast'
 
-import InputText from 'primevue/inputtext'
-import Button from 'primevue/button'
-import Select from 'primevue/select'
-import FloatLabel from 'primevue/floatlabel'
-import ToggleButton from 'primevue/togglebutton'
-
-import TreeTable from 'primevue/treetable'
-import Column from 'primevue/column'
-
-import InputGroup from 'primevue/inputgroup'
-import InputGroupAddon from 'primevue/inputgroupaddon'
 import 'primeicons/primeicons.css'
 
-import { ref } from 'vue'
+import SortGroup from './components/SortGroup.vue'
+import InfoTable from './components/InfoTable.vue'
 
-const sortOptions = [
-  { name: 'Population', code: 'POP' },
-  { name: 'Area', code: 'ARA' },
-  { name: 'Alphabeticly', code: 'ABC' },
-]
+import { getAllCounries } from './api/countries'
+import TableTop from './components/TableTop.vue'
 
-const options = ref([
-  { name: 'America', value: 1 },
-  { name: 'Antarctic', value: 2 },
-  { name: 'Africa', value: 3 },
-  { name: 'Asia', value: 4 },
-  { name: 'Europe', value: 5 },
-  { name: 'Ocenia', value: 6 },
-])
+const countries = reactive<Country[]>([])
+const query = ref('')
+
+const visibleCountries = reactive<Country[]>([])
 
 const toast = useToast()
-const query = ref('')
-const sortType = ref(sortOptions[0])
 
-const showToast = (message: string, type: string) => {
+const showToast = (message: string, type: Severity) => {
   toast.add({
     severity: type,
     summary: 'Error Message',
@@ -45,87 +31,46 @@ const showToast = (message: string, type: string) => {
   })
 }
 
-function handleSubmit() {
-  if (!query.value) {
-    showToast('Please choose a params before the search!', 'error')
+async function fetchAllCountries() {
+  try {
+    const result = await getAllCounries()
+
+    countries.push(...result.data)
+    visibleCountries.push(...result.data)
+  } catch {
+    showToast('Failed to load the data, try again!', 'error')
   }
 }
+
+onMounted(() => {
+  fetchAllCountries()
+})
 </script>
 
 <template>
   <Toast />
   <div
-    class="bg-desktop bg-full-width flex flex-col items-center justify-center gap-108 bg-no-repeat px-32"
+    class="flex flex-col items-center justify-center gap-80 bg-desktop bg-full-width bg-no-repeat px-32"
   >
-    <header class="mt-[140px]">
+    <header class="mt-72">
       <img src="/src/assets/img/logo.svg" alt="logo" class="w-220" />
     </header>
 
     <main class="w-full">
       <section
-        class="bg-black border-black-soft flex flex-col gap-32 rounded-lg border-[1px] px-24 py-32"
+        class="flex flex-col gap-32 rounded-lg border-[1px] border-black-soft bg-black px-24 py-32"
       >
-        <div class="flex items-center justify-between">
-          <p class="font-semibold">Found 234 countries</p>
+        <TableTop :data="visibleCountries" v-model="query" />
 
-          <InputGroup class="max-w-[320px]">
-            <InputText placeholder="Search" />
-            <InputGroupAddon>
-              <Button
-                icon="pi pi-search"
-                severity="secondary"
-                @click="handleSubmit"
-              />
-            </InputGroupAddon>
-          </InputGroup>
-        </div>
+        <div class="flex justify-between gap-64">
+          <SortGroup
+            :visibleData="visibleCountries"
+            :countries="countries"
+            :query="query"
+            @toast="showToast"
+          />
 
-        <div class="flex justify-between">
-          <div class="flex flex-col gap-32">
-            <FloatLabel>
-              <Select
-                class="!bg-black"
-                v-model="sortType"
-                :options="sortOptions"
-                optionLabel="name"
-                inputId="over_label"
-                checkmark
-                :highlightOnSelect="false"
-              />
-              <label for="over_label">Sort By</label>
-            </FloatLabel>
-            <ul>
-              <ToggleButton
-                class="!bg-black m-4 !border-none"
-                v-model="checked"
-                :onLabel="option.name"
-                :offLabel="option.name"
-                v-for="(option, index) of options"
-                :key="index"
-              />
-            </ul>
-          </div>
-
-          <TreeTable
-            :value="nodes"
-            :paginator="true"
-            :rows="5"
-            tableStyle="min-width: 50rem"
-          >
-            <Column field="flag" header="Flag" style="width: auto"></Column>
-            <Column field="name" header="Name" style="width: auto"></Column>
-            <Column
-              field="population"
-              header="Population"
-              style="width: auto"
-            ></Column>
-            <Column
-              field="area"
-              header="Area (km²)"
-              style="width: auto"
-            ></Column>
-            <Column field="region" header="Region" style="width: auto"></Column>
-          </TreeTable>
+          <InfoTable :renderData="visibleCountries" v-model="query" />
         </div>
       </section>
     </main>
@@ -133,3 +78,4 @@ function handleSubmit() {
 </template>
 
 <style></style>
+AS
