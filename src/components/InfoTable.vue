@@ -3,7 +3,7 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import type { Country } from '@/interface/Country'
 import { RouterLink } from 'vue-router'
-import { handleNummberFormat } from '@/handlers/handleFormatting'
+import { handleNumberFormat } from '@/handlers/handleFormatting'
 
 const props = defineProps<{
   renderData: Country[]
@@ -38,12 +38,12 @@ const props = defineProps<{
     >
     <Column sortable field="population" header="Population" style="width: 20%">
       <template #body="slotProps">
-        <span> {{ handleNummberFormat(slotProps.data.population) }}</span>
+        <span> {{ handleNumberFormat(slotProps.data.population) }}</span>
       </template></Column
     >
     <Column sortable field="area" header="Area (km²)" style="width: 20%">
       <template #body="slotProps">
-        <span> {{ handleNummberFormat(slotProps.data.area) }}</span>
+        <span> {{ handleNumberFormat(slotProps.data.area) }}</span>
       </template>
     </Column>
     <Column field="region" header="Region" style="width: 20%"></Column>

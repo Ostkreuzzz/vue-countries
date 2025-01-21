@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import { RouterView, RouterLink } from 'vue-router'
 </script>
 
 <template>
@@ -7,10 +7,12 @@ import { RouterView } from 'vue-router'
     class="flex flex-col items-center justify-center gap-80 bg-desktop bg-full-width bg-no-repeat px-32"
   >
     <header class="mt-72">
-      <img src="/src/assets/img/logo.svg" alt="logo" class="w-220" />
+      <RouterLink to="/">
+        <img src="/src/assets/img/logo.svg" alt="logo" class="w-220" />
+      </RouterLink>
     </header>
 
-    <main class="w-full">
+    <main class="flex w-full justify-center">
       <RouterView />
     </main>
   </div>

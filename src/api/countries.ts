@@ -7,3 +7,7 @@ export async function getAllCounries() {
 export async function getCountry(name: string) {
   return client.get(`/name/${name}`)
 }
+
+export async function getCountryByCode(code: string) {
+  return client.get(`?codes=${code.toLowerCase()}`)
+}

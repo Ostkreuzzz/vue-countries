@@ -1,39 +1,63 @@
-# vue-custom-todo
+<h1 align="center">{country-page-master} | devChallenges</h1>
 
-This template should help get you started developing with Vue 3 in Vite.
+<div align="center">
+   Solution for a challenge <a href="https://devchallenges.io/challenge/country-page" target="_blank">Country Page - WorldRanks
+</a> .
+</div>
 
-## Recommended IDE Setup
+<div align="center">
+  <h3>
+    <a href="{https://ostkreuzzz.github.io/vue-countries/}">
+      Demo
+    </a>
+    <span> | </span>
+    <a href="{https://github.com/Ostkreuzzz/vue-countries}">
+      Solution
+    </a>
+    <span> | </span>
+    <a href="https://devchallenges.io/challenge/country-page">
+      Challenge
+    </a>
+  </h3>
+</div>
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+# Country Page - WorldRanks 🌍
 
-## Type Support for `.vue` Imports in TS
+![screenshot](./thumbnail.jpg)
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+## About the Project
 
-## Customize configuration
+The **Country Page - WorldRanks** project provides users with detailed information about countries, including population, region, subregion, and more. This app is fully responsive and works seamlessly across various devices.
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+## Built With
 
-## Project Setup
+- [Vue 3](https://vuejs.org/)
+- [Vite](https://vitejs.dev/)
+- [Vue Router](https://router.vuejs.org/)
+- [Rest Countries API](https://restcountries.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
 
-```sh
-npm install
-```
+## Features
 
-### Compile and Hot-Reload for Development
+- 🌍 Fetch and display information about countries from the Rest Countries API.
+- 🔎 Search for countries by name.
+- 🗂️ Filter countries by region.
+- 📱 Fully responsive design.
 
-```sh
-npm run dev
-```
+### Installation
 
-### Type-Check, Compile and Minify for Production
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Ostkreuzzz/vue-countries.git
+   cd vue-countries
+   ```
 
-```sh
-npm run build
-```
+### Built with
 
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+- Prime Vue UI
+- Axios
+- REST API
+- CSS custom properties
+- Flexbox
+- [Vue.js](https://vuejs.org/)
+- [Tailwind](https://tailwindcss.com/)

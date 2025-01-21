@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 import type { Country } from '../interface/Country'
 
@@ -9,20 +9,31 @@ import Divider from 'primevue/divider'
 
 import 'primeicons/primeicons.css'
 import { getCountry } from '@/api/countries'
-import { handleNummberFormat } from '@/handlers/handleFormatting'
+
+import { useRoute } from 'vue-router'
+import Card from 'primevue/card'
+import { handleNumberFormat } from '@/handlers/handleFormatting'
+
+const route = useRoute()
+const countryPath = route.path.slice(1)
 
 const isLoading = ref(false)
-const countryPath = 'deutschland'
 
 const country = ref<Country | null>(null)
+
+const currencyKeys = computed(() =>
+  Object.keys(country.value?.currencies || {}),
+)
+
+const currencyNames = computed(() =>
+  currencyKeys.value.map((key) => country.value?.currencies[key]?.name),
+)
 
 async function fetchCountry() {
   isLoading.value = true
   try {
     const result = await getCountry(countryPath)
-
     country.value = result.data[0]
-    console.log(country)
   } catch {
     // showToast('Failed to load the data, try again!', 'error')
   } finally {
@@ -36,49 +47,74 @@ onMounted(() => {
 </script>
 
 <template>
-  <ProgressSpinner v-if="!country" />
+  <ProgressSpinner v-if="isLoading" />
+  <div v-if="!country">No Data</div>
 
   <Card
     v-else
-    class="flex justify-center rounded-lg border-[1px] border-black-soft bg-black px-24 py-32"
+    class="flex w-full max-w-screen-tablet-large flex-col gap-40 border-[1px] border-black-soft py-32"
   >
-    <div class="relative flex flex-col items-center justify-center gap-24">
-      <Image
-        :src="country?.flags.png"
-        alt="Image"
-        width="250"
-        preview
-        class="absolute -top-96 rounded-lg"
-      />
-      <div class="flex flex-col items-center">
-        <h1 class="text-3xl font-semibold">
-          {{ country.name.common }}
-        </h1>
-        <h2>
-          {{ country.name.official }}
-        </h2>
+    <template #header>
+      <div class="relative flex flex-col items-center justify-center gap-24">
+        <Image :src="country.flags.png" alt="Image" preview />
+        <div class="flex flex-col items-center">
+          <h1 class="text-3xl font-semibold">
+            {{ country.name.common }}
+          </h1>
+          <h2>
+            {{ country.name.official }}
+          </h2>
+        </div>
+
+        <section class="flex gap-40">
+          <div class="flex items-center gap-16 rounded-lg bg-black-soft p-16">
+            <p>Population</p>
+            <Divider layout="vertical" />
+            <p>{{ handleNumberFormat(country.population) }}</p>
+          </div>
+
+          <div class="flex items-center gap-16 rounded-lg bg-black-soft p-16">
+            <p>Area (km²)</p>
+            <Divider layout="vertical" />
+            <p>{{ handleNumberFormat(country.area) }}</p>
+          </div>
+        </section>
       </div>
+    </template>
 
-      <section class="flex gap-40">
-        <div class="flex items-center rounded-lg bg-black-soft p-16">
-          <p>Population</p>
-          <Divider layout="vertical" />
-          <p>{{ handleNummberFormat(country.population) }}</p>
-        </div>
-
-        <div class="flex items-center rounded-lg bg-black-soft p-16">
-          <p>Area (km²)</p>
-          <Divider layout="vertical" />
-          <p>{{ handleNummberFormat(country.area) }}</p>
-        </div>
-      </section>
-
-      <table class="flex flex-col">
-        <tr class="flex justify-between">
-          <th scope="row">Chris</th>
-          <td>22</td>
+    <template #content>
+      <table class="flex w-full flex-col">
+        <tr
+          class="flex justify-between border-y-[1px] border-black-soft px-16 py-18"
+        >
+          <th>Capital</th>
+          <td>{{ Object.values(country.capital).join(', ') }}</td>
+        </tr>
+        <tr
+          class="flex justify-between border-y-[1px] border-black-soft px-16 py-18"
+        >
+          <th>Subregion</th>
+          <td>{{ country.subregion }}</td>
+        </tr>
+        <tr
+          class="flex justify-between border-y-[1px] border-black-soft px-16 py-18"
+        >
+          <th>Language</th>
+          <td>{{ Object.values(country.languages).join(', ') }}</td>
+        </tr>
+        <tr
+          class="flex justify-between border-y-[1px] border-black-soft px-18 py-24"
+        >
+          <th>Currencies</th>
+          <td>{{ currencyNames.join(', ') }}</td>
+        </tr>
+        <tr
+          class="flex justify-between border-y-[1px] border-black-soft px-16 py-18"
+        >
+          <th>Continents</th>
+          <td>{{ Object.values(country.continents).join(', ') }}</td>
         </tr>
       </table>
-    </div>
+    </template>
   </Card>
 </template>

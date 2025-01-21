@@ -1,6 +1,6 @@
 export interface Country {
-  flags: FlagType
-  name: CountryName
+  flags: { png: string; svg: string }
+  name: { common: string; official: string }
   population: string
   area: string
   region: string
@@ -8,18 +8,10 @@ export interface Country {
   independent: boolean
   continents: string[]
   capital: string[]
-  currencies: string[]
-  languages: string[]
-  borders: string[]
+  currencies: {
+    [key: string]: { name: string; symbol: string }
+  }
+  languages: object
+  borders?: string[]
   subregion: string
-}
-
-interface CountryName {
-  common: string
-  official: string
-}
-
-interface FlagType {
-  png: string
-  svg: string
 }
